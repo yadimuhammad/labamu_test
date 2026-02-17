@@ -24,7 +24,7 @@ class NetworkFailure extends Failure {
 class ConflictFailure extends Failure {
   final Map<String, dynamic>? serverData;
 
-  const ConflictFailure(String message, {this.serverData}) : super(message);
+  const ConflictFailure(super.message, {this.serverData});
 
   @override
   List<Object?> get props => [message, serverData];

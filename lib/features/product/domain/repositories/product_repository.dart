@@ -8,7 +8,8 @@ abstract class ProductRepository {
     required int page,
     required int limit,
   });
-  Future<Either<Failure, Product>> fetchProduct(String id);
-  Future<Either<Failure, Product>> saveProduct(Product productData);
+  Future<Either<Failure, Product>> fetchProduct(int id);
+  Future<Either<Failure, Product>> addProduct(Product product);
+  Future<Either<Failure, Product>> updateProduct(Product product);
   Future<Either<Failure, Unit>> syncProducts();
 }

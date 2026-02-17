@@ -9,7 +9,7 @@ class FetchProduct {
 
   FetchProduct(this.repository);
 
-  Future<Either<Failure, Product>> execute(String id) async {
+  Future<Either<Failure, Product>> execute(int id) async {
     return await repository.fetchProduct(id);
   }
 }

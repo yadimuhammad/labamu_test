@@ -6,8 +6,6 @@ part 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc() : super(ProductInitial()) {
-    on<ProductEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<ProductEvent>((event, emit) {});
   }
 }
