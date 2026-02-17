@@ -21,3 +21,22 @@ class EmptyException implements Exception {
 
   const EmptyException({required this.message});
 }
+
+class CacheException implements Exception {
+  final String message;
+
+  const CacheException({required this.message});
+}
+
+class NetworkException implements Exception {
+  final String message;
+
+  const NetworkException({required this.message});
+}
+
+class ConflictException implements Exception {
+  final String message;
+  final Map<String, dynamic>? serverData;
+
+  const ConflictException({required this.message, this.serverData});
+}
