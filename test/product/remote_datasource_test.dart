@@ -12,7 +12,7 @@
 // 6. open coverage/html/index.html
 
 // Remove unwanted files to coverage
-// 1. lcov --remove coverage/lcov.info "lib/core/error/*" "lib/features/profile/data/models/*" -o coverage/lcov.info
+// 1. lcov --remove coverage/lcov.info "lib/core/error/*" "lib/features/product/data/models/*" "lib/features/product/domain/entities/*" -o coverage/lcov.info
 
 import 'dart:convert';
 

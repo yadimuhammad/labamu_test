@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:labamu_test/core/injection/app_injection.dart';
-import 'package:labamu_test/features/product/domain/entities/product.dart';
-import 'package:labamu_test/features/product/presentation/bloc/product_bloc.dart';
+import '../../../../core/injection/app_injection.dart';
+import '../../domain/entities/product.dart';
+import '../bloc/product_bloc.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String id;
@@ -49,16 +49,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   void _saveProduct() {
     if (_formKey.currentState!.validate()) {
-      final updatedProduct = Product(
-        id: _currentProduct!.id,
-        name: _nameController.text,
-        price: int.parse(_priceController.text),
-        description: _descriptionController.text,
-        status: _statusController.text,
-        updatedAt: DateTime.now().toIso8601String(),
+      // Only send primitive data to BLoC, let BLoC handle business logic
+      _productBloc.add(
+        ProductEventUpdateProduct(
+          id: _currentProduct!.id,
+          name: _nameController.text,
+          price: int.parse(_priceController.text),
+          description: _descriptionController.text,
+          status: _statusController.text,
+        ),
       );
-
-      _productBloc.add(ProductEventUpdateProduct(product: updatedProduct));
     }
   }
 

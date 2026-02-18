@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:labamu_test/features/product/domain/entities/product.dart';
+import '../../domain/entities/product.dart';
 
 class ProductListItem extends StatelessWidget {
   final Function() onTap;

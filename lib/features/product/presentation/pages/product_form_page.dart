@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:labamu_test/core/injection/app_injection.dart';
-import 'package:labamu_test/features/product/domain/entities/product.dart';
-import 'package:labamu_test/features/product/presentation/bloc/product_bloc.dart';
+import '../../../../core/injection/app_injection.dart';
+import '../bloc/product_bloc.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -18,7 +17,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final _priceController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _statusController = TextEditingController(text: 'active');
-  
+
   late ProductBloc _productBloc;
 
   @override
@@ -38,16 +37,15 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   void _saveProduct() {
     if (_formKey.currentState!.validate()) {
-      final newProduct = Product(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: _nameController.text,
-        price: int.parse(_priceController.text),
-        description: _descriptionController.text,
-        status: _statusController.text,
-        updatedAt: DateTime.now().toIso8601String(),
+      // Only send primitive data to BLoC, let BLoC handle business logic
+      _productBloc.add(
+        ProductEventAddProduct(
+          name: _nameController.text,
+          price: int.parse(_priceController.text),
+          description: _descriptionController.text,
+          status: _statusController.text,
+        ),
       );
-      
-      _productBloc.add(ProductEventAddProduct(product: newProduct));
     }
   }
 
@@ -57,10 +55,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
       appBar: AppBar(
         title: const Text('Add New Product'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveProduct,
-          ),
+          IconButton(icon: const Icon(Icons.save), onPressed: _saveProduct),
         ],
       ),
       body: BlocConsumer<ProductBloc, ProductState>(
@@ -72,16 +67,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
             );
             context.pop();
           } else if (state is ProductStateError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
           }
         },
         builder: (context, state) {
           if (state is ProductStateLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -163,4 +158,3 @@ class _ProductFormPageState extends State<ProductFormPage> {
     );
   }
 }
-

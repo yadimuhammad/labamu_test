@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import '../../../../core/error/exceptions.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../models/product_model.dart';
 
 abstract class ProductRemoteDataSource {

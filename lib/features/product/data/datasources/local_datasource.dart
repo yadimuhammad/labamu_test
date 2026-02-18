@@ -11,6 +11,9 @@ abstract class ProductLocalDataSource {
   Future<ProductModel> addProduct(ProductModel product);
   Future<ProductModel> updateProduct(ProductModel product);
   Future<void> clearProducts();
+  Future<List<ProductModel>> fetchUnsyncedProducts();
+  Future<void> markProductAsSynced(String id);
+  Future<void> markProductAsUnsynced(String id);
 }
 
 class ProductLocalDataSourceImpl implements ProductLocalDataSource {
@@ -56,5 +59,51 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   @override
   Future<void> clearProducts() {
     return productsBox.clear();
+  }
+
+  @override
+  Future<List<ProductModel>> fetchUnsyncedProducts() {
+    final unsyncedProducts = productsBox.values
+        .where((product) => !product.isSynced)
+        .toList();
+    return Future.value(unsyncedProducts);
+  }
+
+  @override
+  Future<void> markProductAsSynced(String id) {
+    final product = productsBox.get(id);
+    if (product != null) {
+      final syncedProduct = ProductModel(
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        status: product.status,
+        updatedAt: product.updatedAt,
+        isSynced: true,
+        lastSyncedAt: DateTime.now().toIso8601String(),
+      );
+      productsBox.put(id, syncedProduct);
+    }
+    return Future.value();
+  }
+
+  @override
+  Future<void> markProductAsUnsynced(String id) {
+    final product = productsBox.get(id);
+    if (product != null) {
+      final unsyncedProduct = ProductModel(
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        status: product.status,
+        updatedAt: product.updatedAt,
+        isSynced: false,
+        lastSyncedAt: product.lastSyncedAt,
+      );
+      productsBox.put(id, unsyncedProduct);
+    }
+    return Future.value();
   }
 }

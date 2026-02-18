@@ -13,6 +13,8 @@ class ProductModel extends Product {
     required super.description,
     required super.status,
     required super.updatedAt,
+    super.isSynced,
+    super.lastSyncedAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,9 @@ class ProductModel extends Product {
       description: json['description'],
       status: json['status'],
       updatedAt: json['updatedAt'],
+      // Remote data is always considered synced
+      isSynced: true,
+      lastSyncedAt: DateTime.now().toIso8601String(),
     );
   }
 
@@ -34,6 +39,7 @@ class ProductModel extends Product {
       'description': description,
       'status': status,
       'updatedAt': updatedAt,
+      // Don't send sync fields to API
     };
   }
 
@@ -41,5 +47,32 @@ class ProductModel extends Product {
   static List<ProductModel> fromJsonList(List jsonList) {
     if (jsonList.isEmpty) return [];
     return jsonList.map((json) => ProductModel.fromJson(json)).toList();
+  }
+
+  // Create a copy with updated sync status
+  ProductModel markAsSynced() {
+    return ProductModel(
+      id: id,
+      name: name,
+      price: price,
+      description: description,
+      status: status,
+      updatedAt: updatedAt,
+      isSynced: true,
+      lastSyncedAt: DateTime.now().toIso8601String(),
+    );
+  }
+
+  ProductModel markAsUnsynced() {
+    return ProductModel(
+      id: id,
+      name: name,
+      price: price,
+      description: description,
+      status: status,
+      updatedAt: updatedAt,
+      isSynced: false,
+      lastSyncedAt: lastSyncedAt,
+    );
   }
 }

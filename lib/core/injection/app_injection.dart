@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:labamu_test/features/product/data/models/product_model.dart';
+import '../../features/product/data/models/product_model.dart';
 import '../network/network_info.dart';
 import '../../features/product/data/datasources/local_datasource.dart';
 import '../../features/product/data/datasources/remote_datasource.dart';
@@ -11,6 +11,7 @@ import '../../features/product/domain/repositories/product_repository.dart';
 import '../../features/product/domain/usecases/add_product.dart';
 import '../../features/product/domain/usecases/fetch_product.dart';
 import '../../features/product/domain/usecases/fetch_products.dart';
+import '../../features/product/domain/usecases/sync_product.dart';
 import '../../features/product/domain/usecases/update_product.dart';
 import '../../features/product/presentation/bloc/product_bloc.dart';
 
@@ -37,6 +38,8 @@ Future<void> init() async {
       fetchProduct: sl(),
       addProduct: sl(),
       updateProduct: sl(),
+      syncProduct: sl(),
+      networkInfo: sl(),
     ),
   );
   // UseCase
@@ -44,6 +47,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => FetchProduct(sl()));
   sl.registerLazySingleton(() => AddProduct(sl()));
   sl.registerLazySingleton(() => UpdateProduct(sl()));
+  sl.registerLazySingleton(() => SyncProduct(sl()));
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(

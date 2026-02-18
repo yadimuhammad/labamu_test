@@ -18,6 +18,10 @@ class Product extends Equatable {
   final String status;
   @HiveField(5)
   final String updatedAt;
+  @HiveField(6)
+  final bool isSynced;
+  @HiveField(7)
+  final String? lastSyncedAt;
 
   const Product({
     required this.id,
@@ -26,8 +30,41 @@ class Product extends Equatable {
     required this.description,
     required this.status,
     required this.updatedAt,
+    this.isSynced = false,
+    this.lastSyncedAt,
   });
 
+  Product copyWith({
+    String? id,
+    String? name,
+    int? price,
+    String? description,
+    String? status,
+    String? updatedAt,
+    bool? isSynced,
+    String? lastSyncedAt,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      status: status ?? this.status,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
+    );
+  }
+
   @override
-  List<Object?> get props => [id, name, price, description, status, updatedAt];
+  List<Object?> get props => [
+    id,
+    name,
+    price,
+    description,
+    status,
+    updatedAt,
+    isSynced,
+    lastSyncedAt,
+  ];
 }

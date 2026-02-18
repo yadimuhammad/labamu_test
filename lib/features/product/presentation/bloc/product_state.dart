@@ -56,3 +56,35 @@ class ProductStateUpdated extends ProductState {
   @override
   List<Object> get props => [product];
 }
+
+class ProductStateSyncing extends ProductState {
+  @override
+  List<Object> get props => [];
+}
+
+class ProductStateSynced extends ProductState {
+  final String message;
+
+  ProductStateSynced({this.message = 'Products synced successfully'});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class ProductStateSyncError extends ProductState {
+  final String message;
+
+  ProductStateSyncError({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class ProductStateNetworkStatusChanged extends ProductState {
+  final bool isOnline;
+
+  ProductStateNetworkStatusChanged({required this.isOnline});
+
+  @override
+  List<Object> get props => [isOnline];
+}
