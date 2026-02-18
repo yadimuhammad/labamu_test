@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/product/presentation/pages/product_detail_page.dart';
+import '../../features/product/presentation/pages/product_form_page.dart';
 import '../../features/product/presentation/pages/product_list_page.dart';
 
 class AppRouter {
@@ -12,11 +13,12 @@ class AppRouter {
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: ProductListPage()),
       ),
-
-      // GoRoute(
-      //   path: '/products/new',
-      //   builder: (context, state) => const ProductFormPage(),
-      // ),
+      GoRoute(
+        path: '/products/new',
+        name: 'product_add',
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: ProductFormPage()),
+      ),
       GoRoute(
         path: '/products/:id',
         name: 'product_detail',

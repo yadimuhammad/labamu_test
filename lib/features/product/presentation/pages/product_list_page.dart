@@ -39,7 +39,9 @@ class ProductListPage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.pushNamed('product_add');
+        },
         child: const Icon(Icons.add),
       ),
     );
