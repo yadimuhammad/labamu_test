@@ -27,12 +27,14 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
 
   @override
   Future<ProductModel> fetchProduct(int id) {
-    final product = productsBox.get(id);
-    if (product != null) {
-      return Future.value(product);
-    } else {
-      throw Exception('Product not found');
-    }
+    return Future.value(
+      productsBox.values.firstWhere(
+        (product) => product.id == id.toString(),
+        orElse: () {
+          throw Exception('Product not found');
+        },
+      ),
+    );
   }
 
   @override

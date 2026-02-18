@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:labamu_test/core/error/failure.dart';
-import 'package:labamu_test/features/product/data/datasources/remote_datasource.dart';
-import 'package:labamu_test/features/product/data/models/product_model.dart';
+import '../../../../core/error/failure.dart';
+import '../datasources/remote_datasource.dart';
+import '../models/product_model.dart';
 
-import 'package:labamu_test/features/product/domain/entities/product.dart';
+import '../../domain/entities/product.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/network_info.dart';

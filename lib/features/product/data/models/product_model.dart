@@ -1,5 +1,10 @@
+import 'package:hive_ce_flutter/hive_flutter.dart';
+
 import '../../domain/entities/product.dart';
 
+part 'product_model.g.dart'; // This is needed for Hive code generation
+
+@HiveType(typeId: 1)
 class ProductModel extends Product {
   const ProductModel({
     required super.id,

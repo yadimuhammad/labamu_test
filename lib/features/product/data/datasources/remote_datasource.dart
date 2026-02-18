@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:labamu_test/core/error/exceptions.dart';
+import '../../../../core/error/exceptions.dart';
 
 import '../models/product_model.dart';
 
